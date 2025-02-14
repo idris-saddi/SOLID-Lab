@@ -1,0 +1,47 @@
+@startuml refactoredSRP
+
+class Car {
+    - String _id
+    - String _model
+    - String _brand
+    + Car(String id, String model, String brand)
+    + String getId()
+    + String getModel()
+    + String getBrand()
+    + String toString()
+    + int compareTo(Car car)
+}
+
+class CarDb {
+    - static List<Car> _carsDb
+    - static CarDb _instance
+    - CarDb()
+    + static CarDb getInstance()
+    + List<Car> getAll()
+    + Car getById(String carId)
+    + List<Car> getByModel(String model)
+    + List<Car> getByBrand(String brand)
+    + void addCar(Car car)
+    + void removeCar(Car car)
+}
+
+class CarStr {
+    + String getAllNames(List<Car> cars)
+    + String getUniqueBrands(List<Car> cars)
+}
+
+class CarManager {
+    - CarDb _carDb
+    - CarStr _carStr
+    + CarManager(CarDb carDb)
+    + String getCarsNames()
+    + String getUniqueBrands()
+    + Car getBestCar()
+}
+
+CarDb "1" -- "*" Car
+CarStr "1" -- "*" Car
+CarManager "1" -- "1" CarDb
+CarManager "1" -- "1" CarStr
+
+@enduml
