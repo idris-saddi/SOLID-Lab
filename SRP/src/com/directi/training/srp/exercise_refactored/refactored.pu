@@ -1,4 +1,6 @@
 @startuml refactoredSRP
+interface Comparable
+interface Client
 
 class Car {
     - String _id
@@ -13,7 +15,6 @@ class Car {
 }
 
 class CarDb {
-    - static List<Car> _carsDb
     - static CarDb _instance
     - CarDb()
     + static CarDb getInstance()
@@ -30,18 +31,23 @@ class CarStr {
     + String getUniqueBrands(List<Car> cars)
 }
 
-class CarManager {
-    - CarDb _carDb
-    - CarStr _carStr
-    + CarManager(CarDb carDb)
-    + String getCarsNames()
-    + String getUniqueBrands()
+class CarComp {
     + Car getBestCar()
 }
 
-CarDb "1" -- "*" Car
-CarStr "1" -- "*" Car
-CarManager "1" -- "1" CarDb
-CarManager "1" -- "1" CarStr
+class CarManager {
+    + CarManager(CarDb carDb, CarStr carStr, CarComp carComp)
+    + String getCarsNames()
+    + String getUniqueBrands()
+    + Sytring getBestCar()
+}
 
+CarManager "1" --> "1" CarDb
+CarManager "1" --> "1" CarStr
+CarManager "1" --> "1" CarComp
+CarDb "1" o-- "*" Car
+CarStr  -.->  Car : uses
+CarComp  -.->  Car : uses
+Car --> Comparable : implements
+Client -.-> CarManager : uses
 @enduml

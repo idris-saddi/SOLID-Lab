@@ -3,10 +3,13 @@ package com.directi.training.srp.exercise_refactored;
 public class CarManager {
     private CarDb _carDb;
     private CarStr _carStr;
+    private CarComp _carComp;
 
-    public CarManager(CarDb carDb)
+    public CarManager(CarDb carDb, CarStr carStr, CarComp carComp)
     {
         _carDb = carDb;
+        _carStr = carStr;
+        _carComp = carComp;
     }
 
     public String getCarsNames()
@@ -19,14 +22,8 @@ public class CarManager {
         return _carStr.getUniqueBrands(_carDb.getAll());
     }
 
-    public Car getBestCar()
+    public String getBestCar()
     {
-        Car bestCar = null;
-        for (Car car : _carDb.getAll()) {
-            if (bestCar == null || car.compareTo(bestCar) > 0) {
-                bestCar = car;
-            }
-        }
-        return bestCar;
+        return _carComp.getBestCar(_carDb.getAll()).toString();
     }
 }

@@ -4,6 +4,10 @@ import java.util.List;
 
 public class CarStr {
 
+    public String getCar(Car car) {
+        return car.toString();
+    }
+
     public String getAllNames(List<Car> cars)
     {
         StringBuilder sb = new StringBuilder();
