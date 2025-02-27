@@ -1,0 +1,45 @@
+@startuml DuckSystem(L)
+
+interface IDuck {
+    + void quack()
+    + void swim()
+}
+
+class Duck {
+    + void quack()
+    + void swim()
+}
+
+class NaturalDuck {
+    + void quack()
+    + void swim()
+}
+
+class ElectronicDuck {
+    - boolean _on
+    + void turnOn()
+    + void turnOff()
+    + void quack()
+    + void swim()
+}
+
+class ElectronicDuckAdapter {
+    - ElectronicDuck electronicDuck
+    + ElectronicDuckAdapter(ElectronicDuck electronicDuck)
+    + void quack()
+    + void swim()
+}
+
+class Pool {
+    + void run()
+    - void quack(IDuck... ducks)
+    - void swim(IDuck... ducks)
+    + static void main(String[] args)
+}
+
+IDuck <|.. NaturalDuck
+IDuck <|.. ElectronicDuckAdapter
+ElectronicDuckAdapter --> ElectronicDuck
+Pool --> IDuck
+
+@enduml

@@ -1,0 +1,59 @@
+@startuml EncodingSystem(D)
+
+interface IReader {
+    + List<String> read() throws IOException
+}
+
+interface IWriter {
+    + void write(List<String> data) throws IOException
+}
+
+class FileReader {
+    - String filePath
+    + FileReader(String filePath)
+    + List<String> read() throws IOException
+}
+
+class FileWriter {
+    - String filePath
+    + FileWriter(String filePath)
+    + void write(List<String> data) throws IOException
+}
+
+class NetworkReader {
+    - String url
+    + NetworkReader(String url)
+    + List<String> read() throws IOException
+}
+
+class DatabaseWriter {
+    - MyDatabase database
+    + DatabaseWriter(MyDatabase database)
+    + void write(List<String> data) throws IOException
+}
+
+class MyDatabase {
+    - static Map<Integer, String> _data
+    - static int _count
+    + int write(String inputString)
+}
+
+class EncodingModule {
+    + void encode(IReader reader, IWriter writer) throws IOException
+}
+
+class EncodingModuleClient {
+    + static void main(String[] args) throws IOException
+}
+
+IReader <|.. FileReader
+IReader <|.. NetworkReader
+IWriter <|.. FileWriter
+IWriter <|.. DatabaseWriter
+
+DatabaseWriter --> MyDatabase
+EncodingModule --> IReader : reads
+EncodingModule --> IWriter : writes
+EncodingModuleClient --> EncodingModule : uses
+
+@enduml

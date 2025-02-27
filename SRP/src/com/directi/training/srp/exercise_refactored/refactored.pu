@@ -1,4 +1,4 @@
-@startuml refactoredSRP
+@startuml refactoredSRP(S)
 interface Comparable
 interface Client
 
@@ -11,7 +11,7 @@ class Car {
     + String getModel()
     + String getBrand()
     + String toString()
-    + int compareTo(Car car)
+    + int compareTo(Car other)
 }
 
 class CarDb {
@@ -39,7 +39,7 @@ class CarManager {
     + CarManager(CarDb carDb, CarStr carStr, CarComp carComp)
     + String getCarsNames()
     + String getUniqueBrands()
-    + Sytring getBestCar()
+    + String getBestCar()
 }
 
 CarManager "1" --> "1" CarDb
@@ -48,6 +48,6 @@ CarManager "1" --> "1" CarComp
 CarDb "1" o-- "*" Car
 CarStr  -.->  Car : uses
 CarComp  -.->  Car : uses
-Car --> Comparable : implements
+Car --|> Comparable : implements
 Client -.-> CarManager : uses
 @enduml
